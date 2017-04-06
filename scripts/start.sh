@@ -15,13 +15,14 @@
 # limitations under the License.
 
 echo "================================"
-echo "      Starting Springboot"
+echo "    Starting Springboot v.0.4   "
 echo "================================"
-echo $ARTIFACT_URL
 
 if [ -n "$ARTIFACT_URL" ]
 then
-  wget -q --no-check-certificate --connect-timeout=5 --read-timeout=10 --tries=2 -O $HOME/application.jar "$ARTIFACT_URL"
+  echo "Getting artifact from: ${ARTIFACT_URL}"
+  wget -q --no-check-certificate --connect-timeout=5 --read-timeout=10 --tries=2 -O /tmp/application.jar "$ARTIFACT_URL"
+  exec java -Xms32m -Xmx512m -jar /tmp/application.jar
+else
+  exec java -Xms32m -Xmx512m -jar $HOME/application.jar
 fi
-
-java -Xms32m -Xmx512m -jar $HOME/application.jar
